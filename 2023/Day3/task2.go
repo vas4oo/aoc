@@ -49,7 +49,7 @@ func task2() {
 
 			for _, symbol := range oldLineSymbol {
 				symbolId := strconv.Itoa(lineIndx-1) + strconv.Itoa(symbol)
-				if InBetween(symbol, num.StartPosition-1, num.EndPosition) {
+				if helpers.InBetween(symbol, num.StartPosition-1, num.EndPosition) {
 					if val, ok := added[symbolId]; ok {
 						total += val * num.Value
 						delete(added, symbolId)
@@ -64,7 +64,7 @@ func task2() {
 		for _, num := range oldLineNumber {
 			for _, symbol := range symbols {
 				symbolId := strconv.Itoa(lineIndx) + strconv.Itoa(symbol)
-				if InBetween(symbol, num.StartPosition-1, num.EndPosition) {
+				if helpers.InBetween(symbol, num.StartPosition-1, num.EndPosition) {
 					if val, ok := added[symbolId]; ok {
 						total += val * num.Value
 						delete(added, symbolId)

@@ -3,7 +3,6 @@ package day1
 import (
 	"fmt"
 	"regexp"
-	"strconv"
 	"strings"
 
 	"github.com/vas4oo/AoC/2023/helpers"
@@ -44,8 +43,7 @@ func task2() {
 		}
 
 		num := numbers[0:1] + numbers[numLength-1:]
-		i, _ := strconv.Atoi(num)
-		total += i
+		total += helpers.GetNumber(num)
 
 	}
 

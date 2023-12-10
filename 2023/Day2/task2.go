@@ -2,7 +2,6 @@ package day2
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/vas4oo/AoC/2023/helpers"
@@ -28,7 +27,7 @@ func task2() {
 			for _, cube := range cubes {
 				res := strings.Split(cube, " ")
 				cubeType := res[1]
-				count, _ := strconv.Atoi(res[0])
+				count := helpers.GetNumber(res[0])
 				if count > biggest[cubeType] {
 					biggest[cubeType] = count
 				}

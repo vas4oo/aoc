@@ -22,8 +22,7 @@ func findAllNumberSubstrings(input string) []Pos {
 		var pos Pos
 		pos.StartPosition = match[0]
 		pos.EndPosition = match[1]
-		val, _ := strconv.Atoi(input[match[0]:match[1]])
-		pos.Value = val
+		pos.Value = helpers.GetNumber(input[match[0]:match[1]])
 		positions = append(positions, pos)
 	}
 
@@ -54,14 +53,6 @@ func contains(s []string, str string) bool {
 	return false
 }
 
-func InBetween(i, min, max int) bool {
-	if (i >= min) && (i <= max) {
-		return true
-	} else {
-		return false
-	}
-}
-
 func task1() {
 	total := 0
 	var oldLineNumber []Pos
@@ -83,7 +74,7 @@ func task1() {
 			}
 
 			for _, symbol := range oldLineSymbol {
-				if InBetween(symbol, num.StartPosition-1, num.EndPosition) && !contains(added, numId) {
+				if helpers.InBetween(symbol, num.StartPosition-1, num.EndPosition) && !contains(added, numId) {
 					total += num.Value
 					added = append(added, numId)
 				}
@@ -95,7 +86,7 @@ func task1() {
 			numId := strconv.Itoa(lineIndx) + strconv.Itoa(num.StartPosition) + strconv.Itoa(num.EndPosition)
 
 			for _, symbol := range symbols {
-				if InBetween(symbol, num.StartPosition-1, num.EndPosition) && !contains(added, numId) {
+				if helpers.InBetween(symbol, num.StartPosition-1, num.EndPosition) && !contains(added, numId) {
 					total += num.Value
 					added = append(added, numId)
 				}
