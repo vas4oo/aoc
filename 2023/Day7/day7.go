@@ -13,25 +13,39 @@ type HandOrder struct {
 	Bid       int
 	CardPower string
 }
+type InitialHands map[string]HandOrder
+
 type Hands map[string]int
 
 type HandPower struct {
-	Hand      string
-	SameCards int
+	Hand       string
+	SameCards  int
+	CardsPower string
 }
 
 type HandsPower []HandPower
 
-func (s HandsPower) Len() int           { return len(s) }
-func (s HandsPower) Less(i, j int) bool { return s[i].SameCards < s[j].SameCards }
-func (s HandsPower) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
+func (s HandsPower) Len() int {
+	return len(s)
+}
+
+func (s HandsPower) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
+
+func (s HandsPower) Less(i, j int) bool {
+	if s[i].SameCards == s[j].SameCards {
+		return s[i].CardsPower < s[j].CardsPower
+	}
+	return s[i].SameCards < s[j].SameCards
+}
 
 func Start() {
 	lines := helpers.ReadLines("day7.txt")
-	hands := make(Hands)
+	hands := make(InitialHands)
 	for _, line := range lines {
 		split := strings.Fields(line)
-		hands[split[0]] = helpers.GetNumber(split[1])
+		hands[split[0]] = HandOrder{Bid: helpers.GetNumber(split[1]), CardPower: "@0 @1 @2 @3 @4"}
 	}
 
 	task1(hands)
