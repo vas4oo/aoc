@@ -1,11 +1,11 @@
 package main
 
 import (
-	day5 "github.com/vas4oo/AoC/2023/Day5"
+	day7 "github.com/vas4oo/AoC/2023/Day7"
 )
 
 func main() {
 	// day1.Start()
 	// day2.Start()
-	day5.Start()
+	day7.Start()
 }
