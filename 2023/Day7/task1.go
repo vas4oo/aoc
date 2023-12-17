@@ -24,7 +24,7 @@ func filterBySameCards(handPowers []HandPower, targetSameCards int) []HandPower 
 
 func singleSort(oldHandsPower HandsPower) HandsPower {
 	var handsPower HandsPower
-	for i := 1; i < 6; i++ {
+	for i := 0; i <= 6; i++ {
 		r := filterBySameCards(oldHandsPower, i)
 		sort.Slice(r, func(i, j int) bool {
 			iv, jv := r[i], r[j]
@@ -32,7 +32,7 @@ func singleSort(oldHandsPower HandsPower) HandsPower {
 			jvN := helpers.GetNumber(strings.ReplaceAll(jv.CardsPower, " ", ""))
 			return ivN < jvN
 		})
-
+		fmt.Println(len(r))
 		handsPower = append(handsPower, r...)
 	}
 
@@ -42,38 +42,42 @@ func singleSort(oldHandsPower HandsPower) HandsPower {
 func calculateScore(s string) int {
 	charCount := make(map[rune]int)
 
-	// Count occurrences of each character
 	for _, char := range s {
-		charCount[char]++
+		charCount[char] += 1
 	}
 
-	// Check for different scenarios and calculate the score
-	score := 0
-	pairs := 0
-	threeOfAKind := false
+	if len(charCount) == 5 || len(charCount) == 4 {
+		return 5 - len(charCount)
+	}
 
+	if len(charCount) == 1 {
+		return 6
+	}
+
+	biggestCount := 0
 	for _, count := range charCount {
-		if count == 2 {
-			pairs++
-		} else if count == 3 {
-			threeOfAKind = true
+		if count > biggestCount {
+			biggestCount = count
 		}
 	}
 
-	switch {
-	case pairs == 1 && !threeOfAKind:
-		score = 1
-	case pairs == 2:
-		score = 2
-	case threeOfAKind && pairs == 1:
-		score = 4
-	case charCount[rune(s[0])] == 4:
-		score = 5
-	case charCount[rune(s[0])] == 5:
-		score = 6
+	if biggestCount == 2 && len(charCount) == 3 {
+		return 2
 	}
 
-	return score
+	if biggestCount == 3 && len(charCount) == 3 {
+		return 3
+	}
+
+	if biggestCount == 3 && len(charCount) == 2 {
+		return 4
+	}
+
+	if biggestCount == 4 {
+		return 5
+	}
+
+	return 0
 }
 
 func task1(hands InitialHands) {
@@ -100,7 +104,7 @@ func task1(hands InitialHands) {
 			// 	count += power
 			// }
 
-			mapHands[hand] = calculateScore(hand)
+			mapHands[hand] = calculateScore2(hand)
 
 		}
 	}
@@ -117,10 +121,12 @@ func task1(hands InitialHands) {
 	})
 
 	handsPower = singleSort(handsPower)
+
+	fmt.Println(len(handsPower))
 	for i, hp := range handsPower {
 		sum += (i + 1) * hands[hp.Hand].Bid
 		if hp.Hand == "JJJJJ" {
-			fmt.Println(hp)
+			fmt.Println((i + 1) * hands[hp.Hand].Bid)
 		}
 	}
 	fmt.Println("Task 1:", sum)

@@ -6,7 +6,8 @@ import (
 	"github.com/vas4oo/AoC/2023/helpers"
 )
 
-var CardsPower = []string{"A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"}
+// var CardsPower = []string{"A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"}
+var CardsPower = []string{"A", "K", "Q", "T", "9", "8", "7", "6", "5", "4", "3", "2", "J"}
 var CardsPowerLength = 13
 
 type HandOrder struct {
@@ -48,6 +49,6 @@ func Start() {
 		hands[split[0]] = HandOrder{Bid: helpers.GetNumber(split[1]), CardPower: "@0 @1 @2 @3 @4"}
 	}
 
-	task1(hands)
-	//task2()
+	//task1(hands)
+	task2(hands)
 }
